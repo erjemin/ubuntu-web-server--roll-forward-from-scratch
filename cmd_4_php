@@ -57,10 +57,26 @@ chown -R www-php: /home/www-php/logs/
 usermod -a -G example www-data
 
 # cоздаем виртуальный хост Nginx в редактируя test_cube2_ru.conf
-# 
 nano /etc/nginx/sites-available/test_cube2_ru.conf
+# вот тут его содержание
+# https://github.com/erjemin/ubuntu-web-server--roll-forward-from-scratch/blob/master/test_cube2_ru.conf
+# Сохраняем изменения ^-O и покидаем редактор nano ^-X
 
 # делаем симлинк (символическую ссылку) и делаем конфигурационный файл хоста доступным NGINX
 # Это очень удобно: если надо отключать сайт просто удалим симлинк, не трогая сам конфриг
 ln -s /etc/nginx/sites-available/test_cube2_ru.conf /etc/nginx/sites-enabled/test_cube2_ru.conf
 
+# cоздадим тестовый файл на PHP чтобы проверить работоспособность:
+nano /home/www-php/www/index.php
+
+# содержимое файла, например: <?php phpinfo(); ?>
+# Сохраняем изменения ^-O и покидаем редактор nano ^-X
+
+# Перезапустим NGINX чтобы подхватить хост:
+/etc/init.d/nginx restart
+
+# Если нужен memcached то устанавливаем
+aptitude install memcached php5-memcached
+
+# для применения изменений и подхввтывания memcached перезапустим PHP-FPM 
+/etc/init.d/php5-fpm restart
