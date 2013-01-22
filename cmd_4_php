@@ -68,15 +68,41 @@ ln -s /etc/nginx/sites-available/test_cube2_ru.conf /etc/nginx/sites-enabled/tes
 
 # cоздадим тестовый файл на PHP чтобы проверить работоспособность:
 nano /home/www-php/www/index.php
-
 # содержимое файла, например: <?php phpinfo(); ?>
 # Сохраняем изменения ^-O и покидаем редактор nano ^-X
 
 # Перезапустим NGINX чтобы подхватить хост:
 /etc/init.d/nginx restart
 
+# ____________________________
+# должен работать PHP 
+
 # Если нужен memcached то устанавливаем
 aptitude install memcached php5-memcached
 
 # для применения изменений и подхввтывания memcached перезапустим PHP-FPM 
 /etc/init.d/php5-fpm restart
+
+# Если еще не установлен MySQL то устанавливаем:
+aptitude install mysql-server mysql-client mysql-common
+
+# Устанавливаем phpmyadmin ... для NGINX не так просто как под APACHE
+# И так. Устанавливаем.
+apt-get install phpmyadmin
+# Когда предложит выбор веб-серверов apache2 или ligthttp ничего не выбираем
+# и устанавливаем как без web-сервера. Далее указываем пароль root от сервера MySQL
+# а затем пароль для базы данных PhpMyAdmin
+
+# редактируем конфиг нашего виртуального хоста Nginx (например test_cube2_ru.conf)
+nano /etc/nginx/sites-available/test_cube2_ru.conf
+# в нем есть блок про PHPMYADMIN
+# https://github.com/erjemin/ubuntu-web-server--roll-forward-from-scratch/blob/master/test_cube2_ru.conf
+# если сразу этог не было сделано, то добавояем, сохраняем изменения ^-O и покидаем редактор nano ^-X
+
+# Перезапускаем nginx чтобы подхватить новый test_cube2_ru.conf
+/etc/init.d/nginx restart
+
+# ВСЕ! По аодресу http://test.cube2.ru/phpmyadmin/ должен работать phpmyadmin
+
+
+
