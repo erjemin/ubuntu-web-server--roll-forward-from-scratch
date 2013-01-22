@@ -1,0 +1,66 @@
+#                                      _  _   _  _   _  _  __  _  _     ___   _
+#              .                      | || | | || \ | || |/ /_| || |_  / _ \ / |
+#         ,rX77;;i:.               _  | || | | ||  \| || ' /|_  ..  _|| | | || |
+#       SB0Z2S77rr;.              | |_| || |_| || |\  || . \|_      _|| |_| || |
+#     iWBZ2XX7r;;i                 \___/  \___/ |_| \_||_|\_\ |_||_|   \___/ |_|
+#    :MBa2SXX7;;i:
+#    B@Za2SXXrr;;i
+#    MBZaaSSXXrr;r:             ...using parts which work and parts which don't!
+#    MW8Z22SSXXrrrri
+#    WM0ZZaaSSXXX7r777;;7,
+#---- @B8ZZa2SSXXXX777XSr ------ Как последовательно накатывать WEB-сервер nginx
+#---------------- под UBUNTU... с всякими свистульками для PHP-FPM...
+
+# устанавливаем PHP5 c модулями
+#   * php5-common --
+#   * php5-mysql -- для работы с mysql
+#   * php5-suhosin
+#   * php5-gd
+#   * php5-fpm
+#   * php5-cgi
+#   * php5-fpm
+#   * php-pear
+#   * php5-mcrypt
+aptitude install php5-cli php5-common php5-mysql php5-suhosin php5-gd php5-fpm php5-cgi php5-fpm php-pear php5-mcrypt -y
+
+# Далее надо не забыть устранить потенциаотную уязвимость PHP:
+# открываем и редактируем конфигурационный фай: /etc/php5/fpm/php.ini
+nano /etc/php5/fpm/php.ini
+
+# Находим строку: cgi.fix_pathinfo = 1
+# Приводим ее к виду: cgi.fix_pathinfo = 0
+# Сохраняем изменения ^-O и покидаем редактор nano ^-X
+
+# перезапустим PHP-FPM:
+/etc/init.d/php5-fpm restart
+
+# cоздаем пользователя для работы с web (прям для конкретного сайта)
+# в моем конкретном случае пользователь: www-php
+# при создании пользователя, для безопасности отключим ему доступ к шелл
+useradd www-php -b /home/ -m -U -s /bin/false
+
+# одновременно с созданием пользовател появилась папка /home/www-php
+# и группа www-php ... далее все это пригодится для безопасности
+# придумаем пароль для пользователя www-php  
+passwd www-php
+
+# cоздадим каталоги для самого сайта и логов 
+mkdir -p -m 755 /home/www-php/www
+mkdir -p -m 754 /home/www-php/logs
+
+# даем пользователю www-php  права на них:
+chown -R www-php: /home/www-php/www/
+chown -R www-php: /home/www-php/logs/
+
+# далее надо пользователю www-data (это пользователь по умолчанию назначеный для NGINX) 
+# дать доступ в папку www-php... Для этого добавим пользователя www-data в группу www-php
+usermod -a -G example www-data
+
+# cоздаем виртуальный хост Nginx в редактируя test_cube2_ru.conf
+# 
+nano /etc/nginx/sites-available/test_cube2_ru.conf
+
+# делаем симлинк (символическую ссылку) и делаем конфигурационный файл хоста доступным NGINX
+# Это очень удобно: если надо отключать сайт просто удалим симлинк, не трогая сам конфриг
+ln -s /etc/nginx/sites-available/test_cube2_ru.conf /etc/nginx/sites-enabled/test_cube2_ru.conf
+
