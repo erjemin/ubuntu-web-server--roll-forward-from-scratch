@@ -54,7 +54,7 @@ chown -R www-php: /home/www-php/logs/
 
 # далее надо пользователю www-data (это пользователь по умолчанию назначеный для NGINX) 
 # дать доступ в папку www-php... Для этого добавим пользователя www-data в группу www-php
-usermod -a -G example www-data
+usermod -a -G www-php www-data
 
 # cоздаем виртуальный хост Nginx в редактируя test_cube2_ru.conf
 nano /etc/nginx/sites-available/test_cube2_ru.conf
