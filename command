@@ -50,10 +50,11 @@ sudo ln -s /usr/lib/i386-linux-gnu/libjpeg.so /usr/lib/
 # Библиотека функций компрессии/декомпрессии
 sudo ln -s /usr/lib/i386-linux-gnu/libz.so /usr/lib/
 
-# Библиотека функций работы со шрифтами
+# Библиотека функций работы со шрифтами apps-available а папку apps-enabled
 sudo ln -s /usr/lib/i386-linux-gnu/libfreetype.so /usr/lib/
 
-
+# делаем симлинк с конфига uWSGI из папки 
+ln -s /etc/uwsgi/apps-available/abc_cube2_ru.ini /etc/uwsgi/apps-enabled
 
 # говорим uWSGI запуститься считав настройки с /etc/uwsgi/apps-enabled/abc_cube2_ru.ini
 sudo uwsgi -y /etc/uwsgi/apps-enabled/abc_cube2_ru.ini
