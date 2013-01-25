@@ -52,3 +52,11 @@ sudo ln -s /usr/lib/i386-linux-gnu/libz.so /usr/lib/
 
 # Библиотека функций работы со шрифтами
 sudo ln -s /usr/lib/i386-linux-gnu/libfreetype.so /usr/lib/
+
+
+
+# говорим uWSGI запуститься считав настройки с /etc/uwsgi/apps-enabled/abc_cube2_ru.ini
+sudo uwsgi -y /etc/uwsgi/apps-enabled/abc_cube2_ru.ini
+# после перезагрузки этот скрипт не запуститься и сайт не будет работать
+# поэтому добавляем эту стрку в содержимое /etc/rc.local (это список комманд которые надо
+# отработать при загрузке). Для каждого сайта надо указывать отдельную строку 
