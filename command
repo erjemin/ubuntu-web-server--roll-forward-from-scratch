@@ -32,19 +32,21 @@ apt-get install libjpeg
 apt-get install mc htop git-core htop
 
 # Устанавиваем python с исходниками и библиотеками:
-apt-get install python-dev
-apt-get install python-pip
-apt-get install libxml2-dev
-apt-get install libxslt-dev
-apt-get install python-mysqldb
-apt-get install python-imaging
-apt-get install python-setuptools
-apt-get install python-virtualenv
+# dev-версии пакетов необходимы для сборщиков/разработчиков ПО 
+apt-get install python-dev         # для сборки из исходников питона и библиотек 
+apt-get install libxml2-dev        # для XML
+apt-get install libxslt-dev        # для XSL
+
+apt-get install python-pip         # для PIP --  инструмент для установки и управления пакетами Python
+apt-get install python-mysqldb     # для MySQL
+apt-get install python-imaging     # для ???? картинок ???? она похоже загружает и библиотеку PIL
+apt-get install python-setuptools  
+apt-get install python-virtualenv  # для работу с виртуальным окружением
 
 ## Или все это можно было установить одной командлой
 # apt-get install python-dev python-pip libxml2-dev libxslt-dev  python-mysqldb python-imaging python-setuptools python-virtualenv
 
-# Устанавливаем DJANGO
+# Устанавливаем DJANGO (внимание установится не самая последняя версия)
 apt-get install python-django
 
 #
