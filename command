@@ -23,14 +23,29 @@
 #
 apt-get install gcc make libpcre3 libpcre3-dev libpcrecpp0 libssl-dev zlib1g-dev libfreetype6-dev build-essential libjpeg-dev
 
-#
+# 
 apt-get install libjpeg
 
-#
+# Устанавливаем MC -- это что-то нортон-командера
+# Устанавливаем HTOP -- это что-то типа системного монитора... есть еще и TOP то HTOP прикольнее
+# Устанавливаем GIT
 apt-get install mc htop git-core htop
 
 # Устанавиваем python с исходниками и библиотеками:
-apt-get install python-dev python-pip libxml2-dev libxslt-dev  python-mysqldb python-imaging python-setuptools python-virtualenv
+apt-get install python-dev
+apt-get install python-pip
+apt-get install libxml2-dev
+apt-get install libxslt-dev
+apt-get install python-mysqldb
+apt-get install python-imaging
+apt-get install python-setuptools
+apt-get install python-virtualenv
+
+## Или все это можно было установить одной командлой
+# apt-get install python-dev python-pip libxml2-dev libxslt-dev  python-mysqldb python-imaging python-setuptools python-virtualenv
+
+# Устанавливаем DJANGO
+apt-get install python-django
 
 #
 easy_install lxml==2.3
